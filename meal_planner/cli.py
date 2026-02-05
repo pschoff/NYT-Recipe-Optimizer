@@ -16,7 +16,7 @@ from meal_planner.planner import (
     regenerate_meal,
     save_meal_plan,
 )
-from meal_planner.recipe_sources import import_seed_recipes
+from meal_planner.recipe_sources import import_seed_recipes, scrape_nyt_article
 from meal_planner.recipe_store import get_all_recipes, get_recipe, search_recipes
 from meal_planner.tracker import (
     daily_summary,
@@ -218,6 +218,15 @@ def cmd_recipes_import(args):
         print(f"Imported {count} seed recipes.")
 
 
+def cmd_recipes_scrape_nyt(args):
+    url = args.url
+    count = scrape_nyt_article(url)
+    if count == 0:
+        print("No new recipes imported (all already in database, or none found).")
+    else:
+        print(f"\nImported {count} new recipes from NYTimes Cooking.")
+
+
 def cmd_plan_generate(args):
     user = _get_active_user()
     targets = calculate_macro_targets(user)
@@ -390,6 +399,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     import_p = recipes_sub.add_parser("import", help="Import seed recipes")
     import_p.set_defaults(func=cmd_recipes_import)
+
+    nyt_p = recipes_sub.add_parser("scrape-nyt", help="Scrape recipes from a NYTimes Cooking article")
+    nyt_p.add_argument("--url", default="https://cooking.nytimes.com/article/cheap-healthy-dinner-ideas",
+                       help="NYTimes Cooking article URL to scrape (default: cheap healthy dinners)")
+    nyt_p.set_defaults(func=cmd_recipes_scrape_nyt)
 
     # --- plan ---
     plan_parser = subparsers.add_parser("plan", help="Meal planning")
