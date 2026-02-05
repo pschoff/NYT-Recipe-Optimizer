@@ -25,7 +25,7 @@ A personalized meal planning CLI that calculates macro targets based on your bod
 | `models.py` | Dataclasses for Recipe, Nutrition, UserProfile, MealPlan, MealLog |
 | `db.py` | SQLite schema, connection management, migrations |
 | `recipe_store.py` | Recipe CRUD operations (save, query, search) |
-| `recipe_sources.py` | Data sources: seed JSON, Spoonacular API integration |
+| `recipe_sources.py` | Data sources: seed JSON, NYTimes Cooking scraper, Spoonacular API |
 | `macro_calculator.py` | Mifflin-St Jeor BMR, TDEE, goal-based macro splits |
 | `recommender.py` | Meal recommendation with scoring and variety constraints |
 | `planner.py` | Weekly plan generation, persistence, regeneration |
@@ -34,16 +34,14 @@ A personalized meal planning CLI that calculates macro targets based on your bod
 
 **Technology Stack:** Python 3.9+, SQLite (via stdlib `sqlite3`), `dataclasses` for models. No heavy frameworks — lightweight and portable.
 
-## Legal & Ethical Considerations
+## Recipe Sources
 
-The original `Scraper.py` scraped recipes from NYTimes Cooking. **This violates NYTimes Terms of Service**, which explicitly prohibit automated data collection. The production application uses compliant alternatives:
+The app supports multiple recipe sources:
 
-1. **Seed data** — 30 original recipes with full nutritional info, bundled as `data/seed_recipes.json`
-2. **Spoonacular API** — Commercial recipe API with free tier (150 req/day). See `recipe_sources.py`
-3. **TheMealDB** — Free open-source recipe database (CC licensed)
-4. **User-submitted recipes** — Add your own via the data model
-
-The original `Scraper.py` is preserved for reference only.
+1. **Seed data** — 30 curated recipes with full nutritional info, bundled as `data/seed_recipes.json`
+2. **NYTimes Cooking** — Scrape recipes from any NYT Cooking article page (requires a NYTimes subscription). Extracts title, ingredients, instructions, and nutrition data via `recipe_scrapers`
+3. **Spoonacular API** — Commercial recipe API with free tier (150 req/day). See `recipe_sources.py`
+4. **TheMealDB** — Free open-source recipe database (CC licensed)
 
 ## Quick Start
 
@@ -104,10 +102,14 @@ python -m meal_planner macros
 ### Recipe Management
 
 ```bash
-python -m meal_planner recipes import        # Import seed data
-python -m meal_planner recipes list          # List all recipes
-python -m meal_planner recipes search chicken # Search by name
-python -m meal_planner recipes show 5        # Show recipe details
+python -m meal_planner recipes import          # Import bundled seed data
+python -m meal_planner recipes list            # List all recipes
+python -m meal_planner recipes search chicken  # Search by name
+python -m meal_planner recipes show 5          # Show recipe details
+
+# Scrape recipes from NYTimes Cooking (requires subscription)
+python -m meal_planner recipes scrape-nyt
+python -m meal_planner recipes scrape-nyt --url "https://cooking.nytimes.com/article/easy-pasta-recipes"
 ```
 
 ### Meal Planning
@@ -203,7 +205,7 @@ python -m unittest discover -s tests -v
 NYT-Recipe-Optimizer/
 ├── README.md
 ├── requirements.txt
-├── Scraper.py                  # Original scraper (reference only)
+├── Scraper.py                  # Original standalone scraper
 ├── data/
 │   └── seed_recipes.json       # 30 curated recipes with nutrition data
 ├── meal_planner/
@@ -215,7 +217,7 @@ NYT-Recipe-Optimizer/
 │   ├── macro_calculator.py     # BMR/TDEE/macro target calculations
 │   ├── models.py               # Data models (dataclasses)
 │   ├── planner.py              # Weekly meal plan generation
-│   ├── recipe_sources.py       # Recipe data sources (seed, APIs)
+│   ├── recipe_sources.py       # Recipe data sources (seed, NYT scraper, APIs)
 │   ├── recipe_store.py         # Recipe CRUD operations
 │   ├── recommender.py          # Meal recommendation engine
 │   └── tracker.py              # Meal logging and analytics
