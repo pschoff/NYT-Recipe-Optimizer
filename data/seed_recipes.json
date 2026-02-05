@@ -1,0 +1,927 @@
+[
+  {
+    "title": "Oatmeal with Berries and Honey",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 5,
+    "cook_time_minutes": 10,
+    "ingredients": [
+      {"name": "rolled oats", "quantity": 0.5, "unit": "cup"},
+      {"name": "water", "quantity": 1, "unit": "cup"},
+      {"name": "mixed berries", "quantity": 0.5, "unit": "cup"},
+      {"name": "honey", "quantity": 1, "unit": "tbsp"},
+      {"name": "chia seeds", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Bring water to a boil in a small saucepan.",
+      "Stir in oats and reduce heat to medium-low.",
+      "Cook for 5 minutes, stirring occasionally.",
+      "Top with berries, honey, and chia seeds."
+    ],
+    "nutrition": {
+      "calories": 310,
+      "protein_g": 9,
+      "carbs_g": 55,
+      "fat_g": 6,
+      "fiber_g": 7,
+      "sugar_g": 20,
+      "sodium_mg": 5
+    }
+  },
+  {
+    "title": "Greek Yogurt Parfait",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 5,
+    "cook_time_minutes": 0,
+    "ingredients": [
+      {"name": "Greek yogurt (nonfat)", "quantity": 1, "unit": "cup"},
+      {"name": "granola", "quantity": 0.25, "unit": "cup"},
+      {"name": "blueberries", "quantity": 0.5, "unit": "cup"},
+      {"name": "honey", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Layer yogurt, granola, and blueberries in a glass.",
+      "Drizzle with honey and serve immediately."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein_g": 24,
+      "carbs_g": 38,
+      "fat_g": 4,
+      "fiber_g": 3,
+      "sugar_g": 25,
+      "sodium_mg": 80
+    }
+  },
+  {
+    "title": "Scrambled Eggs with Whole Wheat Toast",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 5,
+    "cook_time_minutes": 5,
+    "ingredients": [
+      {"name": "eggs", "quantity": 3, "unit": "large"},
+      {"name": "whole wheat bread", "quantity": 2, "unit": "slices"},
+      {"name": "butter", "quantity": 1, "unit": "tsp"},
+      {"name": "salt", "quantity": 1, "unit": "pinch"},
+      {"name": "black pepper", "quantity": 1, "unit": "pinch"}
+    ],
+    "instructions": [
+      "Whisk eggs with salt and pepper.",
+      "Melt butter in a nonstick skillet over medium-low heat.",
+      "Add eggs and gently stir with a spatula until just set.",
+      "Toast bread and serve alongside eggs."
+    ],
+    "nutrition": {
+      "calories": 420,
+      "protein_g": 26,
+      "carbs_g": 30,
+      "fat_g": 22,
+      "fiber_g": 4,
+      "sugar_g": 3,
+      "sodium_mg": 520
+    }
+  },
+  {
+    "title": "Avocado Toast with Poached Egg",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 5,
+    "cook_time_minutes": 5,
+    "ingredients": [
+      {"name": "whole wheat bread", "quantity": 2, "unit": "slices"},
+      {"name": "avocado", "quantity": 0.5, "unit": "medium"},
+      {"name": "egg", "quantity": 1, "unit": "large"},
+      {"name": "red pepper flakes", "quantity": 1, "unit": "pinch"},
+      {"name": "lemon juice", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Toast bread until golden.",
+      "Mash avocado with lemon juice, salt, and pepper.",
+      "Poach egg in simmering water for 3-4 minutes.",
+      "Spread avocado on toast and top with poached egg.",
+      "Sprinkle with red pepper flakes."
+    ],
+    "nutrition": {
+      "calories": 380,
+      "protein_g": 15,
+      "carbs_g": 35,
+      "fat_g": 21,
+      "fiber_g": 9,
+      "sugar_g": 3,
+      "sodium_mg": 350
+    }
+  },
+  {
+    "title": "Banana Protein Pancakes",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 5,
+    "cook_time_minutes": 10,
+    "ingredients": [
+      {"name": "banana", "quantity": 1, "unit": "medium"},
+      {"name": "eggs", "quantity": 2, "unit": "large"},
+      {"name": "protein powder (vanilla)", "quantity": 1, "unit": "scoop"},
+      {"name": "oat flour", "quantity": 0.25, "unit": "cup"},
+      {"name": "baking powder", "quantity": 0.5, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Mash banana in a bowl.",
+      "Whisk in eggs, protein powder, oat flour, and baking powder.",
+      "Heat a nonstick pan over medium heat.",
+      "Pour batter to form pancakes, cook 2-3 minutes per side.",
+      "Serve with a drizzle of maple syrup if desired."
+    ],
+    "nutrition": {
+      "calories": 410,
+      "protein_g": 35,
+      "carbs_g": 42,
+      "fat_g": 12,
+      "fiber_g": 4,
+      "sugar_g": 16,
+      "sodium_mg": 300
+    }
+  },
+  {
+    "title": "Veggie Omelette",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 8,
+    "ingredients": [
+      {"name": "eggs", "quantity": 3, "unit": "large"},
+      {"name": "bell pepper", "quantity": 0.25, "unit": "cup", "notes": "diced"},
+      {"name": "onion", "quantity": 0.25, "unit": "cup", "notes": "diced"},
+      {"name": "spinach", "quantity": 0.5, "unit": "cup"},
+      {"name": "mushrooms", "quantity": 0.25, "unit": "cup", "notes": "sliced"},
+      {"name": "olive oil", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Whisk eggs with salt and pepper.",
+      "Heat olive oil in a nonstick skillet over medium heat.",
+      "Sauté vegetables for 3-4 minutes until softened.",
+      "Pour eggs over vegetables, cook until edges set.",
+      "Fold omelette in half and cook 1 more minute."
+    ],
+    "nutrition": {
+      "calories": 300,
+      "protein_g": 22,
+      "carbs_g": 8,
+      "fat_g": 20,
+      "fiber_g": 2,
+      "sugar_g": 4,
+      "sodium_mg": 400
+    }
+  },
+  {
+    "title": "Overnight Chia Pudding",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 5,
+    "cook_time_minutes": 0,
+    "ingredients": [
+      {"name": "chia seeds", "quantity": 3, "unit": "tbsp"},
+      {"name": "almond milk", "quantity": 1, "unit": "cup"},
+      {"name": "vanilla extract", "quantity": 0.5, "unit": "tsp"},
+      {"name": "maple syrup", "quantity": 1, "unit": "tsp"},
+      {"name": "mango", "quantity": 0.5, "unit": "cup", "notes": "diced"}
+    ],
+    "instructions": [
+      "Mix chia seeds, almond milk, vanilla, and maple syrup.",
+      "Refrigerate overnight or at least 4 hours.",
+      "Stir well and top with diced mango before serving."
+    ],
+    "nutrition": {
+      "calories": 250,
+      "protein_g": 8,
+      "carbs_g": 30,
+      "fat_g": 12,
+      "fiber_g": 12,
+      "sugar_g": 14,
+      "sodium_mg": 170
+    }
+  },
+  {
+    "title": "Breakfast Burrito",
+    "meal_types": ["breakfast"],
+    "cuisine": "Mexican",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 10,
+    "ingredients": [
+      {"name": "flour tortilla (whole wheat)", "quantity": 1, "unit": "large"},
+      {"name": "eggs", "quantity": 2, "unit": "large"},
+      {"name": "black beans", "quantity": 0.25, "unit": "cup"},
+      {"name": "cheddar cheese", "quantity": 2, "unit": "tbsp", "notes": "shredded"},
+      {"name": "salsa", "quantity": 2, "unit": "tbsp"}
+    ],
+    "instructions": [
+      "Scramble eggs in a nonstick pan.",
+      "Warm tortilla in a dry pan for 30 seconds per side.",
+      "Layer eggs, beans, cheese, and salsa on tortilla.",
+      "Roll up tightly and serve."
+    ],
+    "nutrition": {
+      "calories": 450,
+      "protein_g": 25,
+      "carbs_g": 42,
+      "fat_g": 20,
+      "fiber_g": 6,
+      "sugar_g": 3,
+      "sodium_mg": 680
+    }
+  },
+  {
+    "title": "Smoothie Bowl with Granola",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 5,
+    "cook_time_minutes": 0,
+    "ingredients": [
+      {"name": "frozen mixed berries", "quantity": 1, "unit": "cup"},
+      {"name": "banana", "quantity": 0.5, "unit": "medium"},
+      {"name": "protein powder", "quantity": 0.5, "unit": "scoop"},
+      {"name": "almond milk", "quantity": 0.5, "unit": "cup"},
+      {"name": "granola", "quantity": 0.25, "unit": "cup"}
+    ],
+    "instructions": [
+      "Blend berries, banana, protein powder, and almond milk until thick.",
+      "Pour into a bowl.",
+      "Top with granola and additional fresh fruit."
+    ],
+    "nutrition": {
+      "calories": 330,
+      "protein_g": 18,
+      "carbs_g": 52,
+      "fat_g": 7,
+      "fiber_g": 8,
+      "sugar_g": 28,
+      "sodium_mg": 150
+    }
+  },
+  {
+    "title": "Cottage Cheese and Fruit Bowl",
+    "meal_types": ["breakfast"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 3,
+    "cook_time_minutes": 0,
+    "ingredients": [
+      {"name": "cottage cheese (low-fat)", "quantity": 1, "unit": "cup"},
+      {"name": "pineapple chunks", "quantity": 0.5, "unit": "cup"},
+      {"name": "walnuts", "quantity": 1, "unit": "tbsp", "notes": "chopped"},
+      {"name": "honey", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Place cottage cheese in a bowl.",
+      "Top with pineapple, walnuts, and honey."
+    ],
+    "nutrition": {
+      "calories": 290,
+      "protein_g": 30,
+      "carbs_g": 28,
+      "fat_g": 8,
+      "fiber_g": 2,
+      "sugar_g": 22,
+      "sodium_mg": 720
+    }
+  },
+  {
+    "title": "Grilled Chicken Caesar Salad",
+    "meal_types": ["lunch"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 12,
+    "ingredients": [
+      {"name": "chicken breast", "quantity": 5, "unit": "oz"},
+      {"name": "romaine lettuce", "quantity": 3, "unit": "cups", "notes": "chopped"},
+      {"name": "parmesan cheese", "quantity": 2, "unit": "tbsp", "notes": "grated"},
+      {"name": "croutons", "quantity": 0.25, "unit": "cup"},
+      {"name": "Caesar dressing (light)", "quantity": 2, "unit": "tbsp"}
+    ],
+    "instructions": [
+      "Season chicken with salt, pepper, and garlic powder.",
+      "Grill chicken for 5-6 minutes per side until cooked through.",
+      "Let rest 5 minutes, then slice.",
+      "Toss lettuce with dressing, top with chicken, parmesan, and croutons."
+    ],
+    "nutrition": {
+      "calories": 420,
+      "protein_g": 42,
+      "carbs_g": 15,
+      "fat_g": 22,
+      "fiber_g": 3,
+      "sugar_g": 3,
+      "sodium_mg": 680
+    }
+  },
+  {
+    "title": "Turkey and Avocado Wrap",
+    "meal_types": ["lunch"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 0,
+    "ingredients": [
+      {"name": "whole wheat tortilla", "quantity": 1, "unit": "large"},
+      {"name": "sliced turkey breast", "quantity": 4, "unit": "oz"},
+      {"name": "avocado", "quantity": 0.5, "unit": "medium"},
+      {"name": "lettuce", "quantity": 2, "unit": "leaves"},
+      {"name": "tomato", "quantity": 2, "unit": "slices"}
+    ],
+    "instructions": [
+      "Lay tortilla flat and spread mashed avocado.",
+      "Layer turkey, lettuce, and tomato.",
+      "Roll tightly, cut in half, and serve."
+    ],
+    "nutrition": {
+      "calories": 390,
+      "protein_g": 32,
+      "carbs_g": 30,
+      "fat_g": 17,
+      "fiber_g": 8,
+      "sugar_g": 3,
+      "sodium_mg": 780
+    }
+  },
+  {
+    "title": "Red Lentil Soup",
+    "meal_types": ["lunch"],
+    "cuisine": "Middle Eastern",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 25,
+    "ingredients": [
+      {"name": "red lentils", "quantity": 0.5, "unit": "cup"},
+      {"name": "onion", "quantity": 0.5, "unit": "medium", "notes": "diced"},
+      {"name": "carrot", "quantity": 1, "unit": "medium", "notes": "diced"},
+      {"name": "garlic", "quantity": 2, "unit": "cloves"},
+      {"name": "cumin", "quantity": 1, "unit": "tsp"},
+      {"name": "vegetable broth", "quantity": 2, "unit": "cups"},
+      {"name": "olive oil", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Sauté onion, carrot, and garlic in olive oil for 5 minutes.",
+      "Add cumin and stir for 30 seconds.",
+      "Add lentils and broth, bring to a boil.",
+      "Reduce heat and simmer 20 minutes until lentils are tender.",
+      "Blend partially for a creamy texture."
+    ],
+    "nutrition": {
+      "calories": 340,
+      "protein_g": 22,
+      "carbs_g": 52,
+      "fat_g": 5,
+      "fiber_g": 18,
+      "sugar_g": 6,
+      "sodium_mg": 620
+    }
+  },
+  {
+    "title": "Quinoa Buddha Bowl",
+    "meal_types": ["lunch"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 20,
+    "ingredients": [
+      {"name": "quinoa", "quantity": 0.5, "unit": "cup", "notes": "dry"},
+      {"name": "chickpeas (canned)", "quantity": 0.5, "unit": "cup"},
+      {"name": "sweet potato", "quantity": 0.5, "unit": "medium", "notes": "cubed"},
+      {"name": "kale", "quantity": 1, "unit": "cup"},
+      {"name": "tahini", "quantity": 1, "unit": "tbsp"},
+      {"name": "lemon juice", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": [
+      "Cook quinoa according to package directions.",
+      "Roast sweet potato at 400°F for 20 minutes.",
+      "Drain and rinse chickpeas.",
+      "Massage kale with a bit of lemon juice.",
+      "Assemble bowl with quinoa, sweet potato, chickpeas, and kale.",
+      "Drizzle with tahini dressing."
+    ],
+    "nutrition": {
+      "calories": 480,
+      "protein_g": 20,
+      "carbs_g": 72,
+      "fat_g": 13,
+      "fiber_g": 14,
+      "sugar_g": 8,
+      "sodium_mg": 380
+    }
+  },
+  {
+    "title": "Tuna Salad Sandwich",
+    "meal_types": ["lunch"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 0,
+    "ingredients": [
+      {"name": "canned tuna in water", "quantity": 5, "unit": "oz"},
+      {"name": "Greek yogurt", "quantity": 2, "unit": "tbsp"},
+      {"name": "celery", "quantity": 1, "unit": "stalk", "notes": "diced"},
+      {"name": "whole wheat bread", "quantity": 2, "unit": "slices"},
+      {"name": "lettuce", "quantity": 2, "unit": "leaves"}
+    ],
+    "instructions": [
+      "Drain tuna and mix with Greek yogurt, celery, salt, and pepper.",
+      "Place on bread with lettuce.",
+      "Close sandwich, cut in half, and serve."
+    ],
+    "nutrition": {
+      "calories": 370,
+      "protein_g": 40,
+      "carbs_g": 28,
+      "fat_g": 10,
+      "fiber_g": 4,
+      "sugar_g": 5,
+      "sodium_mg": 580
+    }
+  },
+  {
+    "title": "Black Bean Tacos",
+    "meal_types": ["lunch"],
+    "cuisine": "Mexican",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 10,
+    "ingredients": [
+      {"name": "corn tortillas", "quantity": 3, "unit": "small"},
+      {"name": "black beans (canned)", "quantity": 0.5, "unit": "cup"},
+      {"name": "corn kernels", "quantity": 0.25, "unit": "cup"},
+      {"name": "avocado", "quantity": 0.25, "unit": "medium"},
+      {"name": "salsa", "quantity": 3, "unit": "tbsp"},
+      {"name": "lime", "quantity": 0.5, "unit": "medium"}
+    ],
+    "instructions": [
+      "Heat black beans with cumin and chili powder.",
+      "Warm tortillas in a dry pan.",
+      "Fill tortillas with beans, corn, avocado, and salsa.",
+      "Squeeze lime juice over tacos."
+    ],
+    "nutrition": {
+      "calories": 380,
+      "protein_g": 15,
+      "carbs_g": 58,
+      "fat_g": 11,
+      "fiber_g": 14,
+      "sugar_g": 4,
+      "sodium_mg": 520
+    }
+  },
+  {
+    "title": "Mediterranean Chickpea Bowl",
+    "meal_types": ["lunch"],
+    "cuisine": "Mediterranean",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 0,
+    "ingredients": [
+      {"name": "chickpeas (canned)", "quantity": 0.75, "unit": "cup"},
+      {"name": "cucumber", "quantity": 0.5, "unit": "medium", "notes": "diced"},
+      {"name": "cherry tomatoes", "quantity": 0.5, "unit": "cup"},
+      {"name": "red onion", "quantity": 2, "unit": "tbsp", "notes": "diced"},
+      {"name": "feta cheese", "quantity": 2, "unit": "tbsp"},
+      {"name": "olive oil", "quantity": 1, "unit": "tbsp"},
+      {"name": "lemon juice", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": [
+      "Drain and rinse chickpeas.",
+      "Combine with cucumber, tomatoes, onion, and feta.",
+      "Dress with olive oil, lemon juice, salt, and oregano.",
+      "Toss gently and serve."
+    ],
+    "nutrition": {
+      "calories": 400,
+      "protein_g": 18,
+      "carbs_g": 42,
+      "fat_g": 18,
+      "fiber_g": 10,
+      "sugar_g": 8,
+      "sodium_mg": 620
+    }
+  },
+  {
+    "title": "Asian Chicken Lettuce Wraps",
+    "meal_types": ["lunch"],
+    "cuisine": "Asian",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 10,
+    "ingredients": [
+      {"name": "ground chicken", "quantity": 5, "unit": "oz"},
+      {"name": "butter lettuce leaves", "quantity": 4, "unit": "large"},
+      {"name": "soy sauce", "quantity": 1, "unit": "tbsp"},
+      {"name": "ginger", "quantity": 1, "unit": "tsp", "notes": "minced"},
+      {"name": "garlic", "quantity": 2, "unit": "cloves"},
+      {"name": "water chestnuts", "quantity": 0.25, "unit": "cup", "notes": "diced"}
+    ],
+    "instructions": [
+      "Cook ground chicken in a skillet over medium-high heat.",
+      "Add ginger, garlic, and soy sauce.",
+      "Stir in water chestnuts.",
+      "Spoon filling into lettuce cups and serve."
+    ],
+    "nutrition": {
+      "calories": 310,
+      "protein_g": 35,
+      "carbs_g": 10,
+      "fat_g": 15,
+      "fiber_g": 2,
+      "sugar_g": 3,
+      "sodium_mg": 720
+    }
+  },
+  {
+    "title": "Minestrone Soup",
+    "meal_types": ["lunch"],
+    "cuisine": "Italian",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 30,
+    "ingredients": [
+      {"name": "cannellini beans", "quantity": 0.5, "unit": "cup"},
+      {"name": "diced tomatoes (canned)", "quantity": 0.5, "unit": "cup"},
+      {"name": "small pasta", "quantity": 0.25, "unit": "cup"},
+      {"name": "zucchini", "quantity": 0.5, "unit": "medium", "notes": "diced"},
+      {"name": "carrot", "quantity": 1, "unit": "medium", "notes": "diced"},
+      {"name": "celery", "quantity": 1, "unit": "stalk", "notes": "diced"},
+      {"name": "vegetable broth", "quantity": 2, "unit": "cups"}
+    ],
+    "instructions": [
+      "Sauté onion, carrot, and celery for 5 minutes.",
+      "Add tomatoes, broth, and beans. Bring to a boil.",
+      "Add pasta and zucchini, simmer 15 minutes.",
+      "Season with Italian herbs, salt, and pepper."
+    ],
+    "nutrition": {
+      "calories": 320,
+      "protein_g": 16,
+      "carbs_g": 55,
+      "fat_g": 4,
+      "fiber_g": 12,
+      "sugar_g": 10,
+      "sodium_mg": 680
+    }
+  },
+  {
+    "title": "Caprese Chicken Sandwich",
+    "meal_types": ["lunch"],
+    "cuisine": "Italian",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 12,
+    "ingredients": [
+      {"name": "chicken breast", "quantity": 4, "unit": "oz"},
+      {"name": "ciabatta roll", "quantity": 1, "unit": "roll"},
+      {"name": "fresh mozzarella", "quantity": 2, "unit": "slices"},
+      {"name": "tomato", "quantity": 2, "unit": "slices"},
+      {"name": "basil leaves", "quantity": 4, "unit": "leaves"},
+      {"name": "balsamic glaze", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Grill or pan-sear chicken breast for 5-6 minutes per side.",
+      "Slice ciabatta roll in half.",
+      "Layer chicken, mozzarella, tomato, and basil.",
+      "Drizzle with balsamic glaze and close sandwich."
+    ],
+    "nutrition": {
+      "calories": 480,
+      "protein_g": 40,
+      "carbs_g": 35,
+      "fat_g": 18,
+      "fiber_g": 2,
+      "sugar_g": 5,
+      "sodium_mg": 650
+    }
+  },
+  {
+    "title": "Baked Salmon with Roasted Vegetables",
+    "meal_types": ["dinner"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 25,
+    "ingredients": [
+      {"name": "salmon fillet", "quantity": 6, "unit": "oz"},
+      {"name": "broccoli", "quantity": 1, "unit": "cup"},
+      {"name": "bell pepper", "quantity": 0.5, "unit": "medium"},
+      {"name": "olive oil", "quantity": 1, "unit": "tbsp"},
+      {"name": "lemon", "quantity": 0.5, "unit": "medium"},
+      {"name": "garlic", "quantity": 2, "unit": "cloves"}
+    ],
+    "instructions": [
+      "Preheat oven to 400°F.",
+      "Toss vegetables with olive oil, salt, and pepper.",
+      "Place salmon on a baking sheet, season with garlic, lemon, salt.",
+      "Roast salmon and vegetables for 20-25 minutes."
+    ],
+    "nutrition": {
+      "calories": 450,
+      "protein_g": 40,
+      "carbs_g": 15,
+      "fat_g": 26,
+      "fiber_g": 4,
+      "sugar_g": 5,
+      "sodium_mg": 380
+    }
+  },
+  {
+    "title": "Chicken Stir-Fry with Brown Rice",
+    "meal_types": ["dinner"],
+    "cuisine": "Asian",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 20,
+    "ingredients": [
+      {"name": "chicken breast", "quantity": 5, "unit": "oz", "notes": "sliced"},
+      {"name": "brown rice", "quantity": 0.5, "unit": "cup", "notes": "cooked"},
+      {"name": "broccoli", "quantity": 1, "unit": "cup"},
+      {"name": "soy sauce", "quantity": 2, "unit": "tbsp"},
+      {"name": "sesame oil", "quantity": 1, "unit": "tsp"},
+      {"name": "ginger", "quantity": 1, "unit": "tsp", "notes": "minced"}
+    ],
+    "instructions": [
+      "Cook brown rice according to package directions.",
+      "Stir-fry chicken in sesame oil over high heat for 5 minutes.",
+      "Add broccoli and ginger, cook 3 more minutes.",
+      "Add soy sauce and toss.",
+      "Serve over brown rice."
+    ],
+    "nutrition": {
+      "calories": 460,
+      "protein_g": 42,
+      "carbs_g": 40,
+      "fat_g": 14,
+      "fiber_g": 5,
+      "sugar_g": 4,
+      "sodium_mg": 850
+    }
+  },
+  {
+    "title": "Lean Beef Tacos",
+    "meal_types": ["dinner"],
+    "cuisine": "Mexican",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 15,
+    "ingredients": [
+      {"name": "lean ground beef (93%)", "quantity": 5, "unit": "oz"},
+      {"name": "corn tortillas", "quantity": 3, "unit": "small"},
+      {"name": "lettuce", "quantity": 0.5, "unit": "cup", "notes": "shredded"},
+      {"name": "tomato", "quantity": 0.25, "unit": "cup", "notes": "diced"},
+      {"name": "cheddar cheese", "quantity": 2, "unit": "tbsp", "notes": "shredded"},
+      {"name": "taco seasoning", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": [
+      "Brown ground beef in a skillet, drain excess fat.",
+      "Add taco seasoning and water per package directions.",
+      "Warm tortillas in a dry pan.",
+      "Fill tortillas with beef, lettuce, tomato, and cheese."
+    ],
+    "nutrition": {
+      "calories": 470,
+      "protein_g": 38,
+      "carbs_g": 35,
+      "fat_g": 20,
+      "fiber_g": 5,
+      "sugar_g": 3,
+      "sodium_mg": 720
+    }
+  },
+  {
+    "title": "Shrimp and Broccoli Garlic Sauté",
+    "meal_types": ["dinner"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 10,
+    "ingredients": [
+      {"name": "shrimp (peeled)", "quantity": 6, "unit": "oz"},
+      {"name": "broccoli", "quantity": 1.5, "unit": "cups"},
+      {"name": "garlic", "quantity": 3, "unit": "cloves", "notes": "minced"},
+      {"name": "olive oil", "quantity": 1, "unit": "tbsp"},
+      {"name": "lemon juice", "quantity": 1, "unit": "tbsp"},
+      {"name": "red pepper flakes", "quantity": 0.25, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Heat olive oil in a large skillet over medium-high heat.",
+      "Add shrimp, cook 2 minutes per side.",
+      "Remove shrimp, add broccoli and garlic, cook 4 minutes.",
+      "Return shrimp, add lemon juice and pepper flakes.",
+      "Toss and serve."
+    ],
+    "nutrition": {
+      "calories": 310,
+      "protein_g": 40,
+      "carbs_g": 12,
+      "fat_g": 12,
+      "fiber_g": 4,
+      "sugar_g": 3,
+      "sodium_mg": 520
+    }
+  },
+  {
+    "title": "Turkey Meatballs with Whole Wheat Pasta",
+    "meal_types": ["dinner"],
+    "cuisine": "Italian",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 25,
+    "ingredients": [
+      {"name": "ground turkey", "quantity": 5, "unit": "oz"},
+      {"name": "whole wheat spaghetti", "quantity": 2, "unit": "oz", "notes": "dry"},
+      {"name": "marinara sauce", "quantity": 0.5, "unit": "cup"},
+      {"name": "egg", "quantity": 1, "unit": "small"},
+      {"name": "breadcrumbs", "quantity": 2, "unit": "tbsp"},
+      {"name": "parmesan", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": [
+      "Mix turkey, egg, breadcrumbs, salt, pepper, and Italian seasoning.",
+      "Form into 5-6 meatballs.",
+      "Bake at 400°F for 20 minutes.",
+      "Cook pasta according to directions.",
+      "Toss pasta with marinara and top with meatballs and parmesan."
+    ],
+    "nutrition": {
+      "calories": 520,
+      "protein_g": 42,
+      "carbs_g": 48,
+      "fat_g": 16,
+      "fiber_g": 6,
+      "sugar_g": 8,
+      "sodium_mg": 680
+    }
+  },
+  {
+    "title": "Grilled Chicken with Sweet Potato",
+    "meal_types": ["dinner"],
+    "cuisine": "American",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 30,
+    "ingredients": [
+      {"name": "chicken breast", "quantity": 6, "unit": "oz"},
+      {"name": "sweet potato", "quantity": 1, "unit": "medium"},
+      {"name": "olive oil", "quantity": 1, "unit": "tsp"},
+      {"name": "green beans", "quantity": 1, "unit": "cup"},
+      {"name": "garlic powder", "quantity": 0.5, "unit": "tsp"},
+      {"name": "paprika", "quantity": 0.5, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Season chicken with garlic powder, paprika, salt, and pepper.",
+      "Grill chicken 6-7 minutes per side.",
+      "Bake sweet potato at 400°F for 25-30 minutes.",
+      "Steam green beans for 5 minutes.",
+      "Serve together."
+    ],
+    "nutrition": {
+      "calories": 480,
+      "protein_g": 45,
+      "carbs_g": 45,
+      "fat_g": 12,
+      "fiber_g": 8,
+      "sugar_g": 12,
+      "sodium_mg": 350
+    }
+  },
+  {
+    "title": "Vegetable Curry with Basmati Rice",
+    "meal_types": ["dinner"],
+    "cuisine": "Indian",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 25,
+    "ingredients": [
+      {"name": "basmati rice", "quantity": 0.5, "unit": "cup", "notes": "dry"},
+      {"name": "coconut milk (lite)", "quantity": 0.5, "unit": "cup"},
+      {"name": "chickpeas", "quantity": 0.5, "unit": "cup"},
+      {"name": "spinach", "quantity": 2, "unit": "cups"},
+      {"name": "curry paste", "quantity": 1, "unit": "tbsp"},
+      {"name": "diced tomatoes", "quantity": 0.5, "unit": "cup"}
+    ],
+    "instructions": [
+      "Cook rice according to package directions.",
+      "Sauté curry paste in a pan for 1 minute.",
+      "Add coconut milk, tomatoes, and chickpeas. Simmer 15 minutes.",
+      "Stir in spinach until wilted.",
+      "Serve curry over rice."
+    ],
+    "nutrition": {
+      "calories": 510,
+      "protein_g": 18,
+      "carbs_g": 72,
+      "fat_g": 16,
+      "fiber_g": 10,
+      "sugar_g": 6,
+      "sodium_mg": 580
+    }
+  },
+  {
+    "title": "Pan-Seared Cod with Quinoa",
+    "meal_types": ["dinner"],
+    "cuisine": "Mediterranean",
+    "servings": 1,
+    "prep_time_minutes": 10,
+    "cook_time_minutes": 20,
+    "ingredients": [
+      {"name": "cod fillet", "quantity": 6, "unit": "oz"},
+      {"name": "quinoa", "quantity": 0.5, "unit": "cup", "notes": "dry"},
+      {"name": "asparagus", "quantity": 6, "unit": "spears"},
+      {"name": "olive oil", "quantity": 1, "unit": "tbsp"},
+      {"name": "lemon", "quantity": 0.5, "unit": "medium"},
+      {"name": "capers", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Cook quinoa according to directions.",
+      "Pat cod dry, season with salt and pepper.",
+      "Sear cod in olive oil, 4 minutes per side.",
+      "Roast asparagus at 400°F for 10 minutes.",
+      "Serve cod over quinoa with asparagus, lemon, and capers."
+    ],
+    "nutrition": {
+      "calories": 440,
+      "protein_g": 42,
+      "carbs_g": 38,
+      "fat_g": 14,
+      "fiber_g": 5,
+      "sugar_g": 3,
+      "sodium_mg": 420
+    }
+  },
+  {
+    "title": "Chicken Fajitas",
+    "meal_types": ["dinner"],
+    "cuisine": "Mexican",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 15,
+    "ingredients": [
+      {"name": "chicken breast", "quantity": 5, "unit": "oz", "notes": "sliced"},
+      {"name": "bell peppers", "quantity": 1, "unit": "cup", "notes": "sliced"},
+      {"name": "onion", "quantity": 0.5, "unit": "medium", "notes": "sliced"},
+      {"name": "flour tortillas", "quantity": 2, "unit": "small"},
+      {"name": "lime", "quantity": 0.5, "unit": "medium"},
+      {"name": "fajita seasoning", "quantity": 1, "unit": "tbsp"}
+    ],
+    "instructions": [
+      "Season chicken with fajita seasoning.",
+      "Cook chicken in a hot skillet for 5-6 minutes.",
+      "Add peppers and onions, cook 5 more minutes.",
+      "Warm tortillas.",
+      "Serve chicken and vegetables in tortillas with lime."
+    ],
+    "nutrition": {
+      "calories": 440,
+      "protein_g": 38,
+      "carbs_g": 38,
+      "fat_g": 14,
+      "fiber_g": 4,
+      "sugar_g": 6,
+      "sodium_mg": 680
+    }
+  },
+  {
+    "title": "Tofu and Vegetable Stir-Fry",
+    "meal_types": ["dinner"],
+    "cuisine": "Asian",
+    "servings": 1,
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 15,
+    "ingredients": [
+      {"name": "firm tofu", "quantity": 7, "unit": "oz", "notes": "cubed"},
+      {"name": "mixed stir-fry vegetables", "quantity": 2, "unit": "cups"},
+      {"name": "soy sauce", "quantity": 2, "unit": "tbsp"},
+      {"name": "sesame oil", "quantity": 1, "unit": "tsp"},
+      {"name": "rice", "quantity": 0.5, "unit": "cup", "notes": "cooked"},
+      {"name": "sriracha", "quantity": 1, "unit": "tsp"}
+    ],
+    "instructions": [
+      "Press tofu for 15 minutes, then cube.",
+      "Cook rice according to directions.",
+      "Sear tofu in sesame oil until golden, about 8 minutes.",
+      "Add vegetables and soy sauce, stir-fry 5 minutes.",
+      "Serve over rice with sriracha."
+    ],
+    "nutrition": {
+      "calories": 420,
+      "protein_g": 28,
+      "carbs_g": 40,
+      "fat_g": 18,
+      "fiber_g": 6,
+      "sugar_g": 5,
+      "sodium_mg": 780
+    }
+  }
+]
