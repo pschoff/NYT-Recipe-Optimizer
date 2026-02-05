@@ -28,6 +28,35 @@ from meal_planner.tracker import (
 )
 
 
+# --- Unit conversions (imperial input, metric internal) ---
+
+LBS_PER_KG = 2.20462
+CM_PER_INCH = 2.54
+INCHES_PER_FOOT = 12
+
+
+def _lbs_to_kg(lbs: float) -> float:
+    return lbs / LBS_PER_KG
+
+
+def _kg_to_lbs(kg: float) -> float:
+    return kg * LBS_PER_KG
+
+
+def _ft_in_to_cm(feet: int, inches: int) -> float:
+    return (feet * INCHES_PER_FOOT + inches) * CM_PER_INCH
+
+
+def _cm_to_ft_in(cm: float) -> tuple:
+    total_inches = cm / CM_PER_INCH
+    feet = int(total_inches // INCHES_PER_FOOT)
+    inches = int(round(total_inches % INCHES_PER_FOOT))
+    if inches == 12:
+        feet += 1
+        inches = 0
+    return feet, inches
+
+
 # --- User profile helpers ---
 
 def _save_user(profile: UserProfile) -> int:
@@ -81,12 +110,15 @@ def cmd_profile_create(args):
     activity_levels = list(ACTIVITY_MULTIPLIERS.keys())
     goals = list(GOAL_CALORIE_ADJUSTMENTS.keys())
 
+    weight_kg = _lbs_to_kg(args.weight)
+    height_cm = _ft_in_to_cm(args.feet, args.inches)
+
     profile = UserProfile(
         id=None,
         name=args.name,
         age=args.age,
-        weight_kg=args.weight,
-        height_cm=args.height,
+        weight_kg=weight_kg,
+        height_cm=height_cm,
         sex=args.sex,
         activity_level=args.activity,
         goal=args.goal,
@@ -109,10 +141,12 @@ def cmd_profile_create(args):
 
 def cmd_profile_show(args):
     user = _get_active_user()
+    lbs = _kg_to_lbs(user.weight_kg)
+    ft, inches = _cm_to_ft_in(user.height_cm)
     print(f"Name:     {user.name}")
     print(f"Age:      {user.age}")
-    print(f"Weight:   {user.weight_kg} kg")
-    print(f"Height:   {user.height_cm} cm")
+    print(f"Weight:   {lbs:.0f} lbs")
+    print(f"Height:   {ft}'{inches}\"")
     print(f"Sex:      {user.sex}")
     print(f"Activity: {user.activity_level}")
     print(f"Goal:     {user.goal}")
@@ -127,9 +161,14 @@ def cmd_profile_update(args):
     if args.age is not None:
         user.age = args.age
     if args.weight is not None:
-        user.weight_kg = args.weight
-    if args.height is not None:
-        user.height_cm = args.height
+        user.weight_kg = _lbs_to_kg(args.weight)
+    if args.feet is not None or args.inches is not None:
+        ft, inches = _cm_to_ft_in(user.height_cm)
+        if args.feet is not None:
+            ft = args.feet
+        if args.inches is not None:
+            inches = args.inches
+        user.height_cm = _ft_in_to_cm(ft, inches)
     if args.activity is not None:
         user.activity_level = args.activity
     if args.goal is not None:
@@ -356,8 +395,9 @@ def build_parser() -> argparse.ArgumentParser:
     create_p = profile_sub.add_parser("create", help="Create a new profile")
     create_p.add_argument("--name", required=True)
     create_p.add_argument("--age", type=int, required=True)
-    create_p.add_argument("--weight", type=float, required=True, help="Weight in kg")
-    create_p.add_argument("--height", type=float, required=True, help="Height in cm")
+    create_p.add_argument("--weight", type=float, required=True, help="Weight in lbs")
+    create_p.add_argument("--feet", type=int, required=True, help="Height (feet)")
+    create_p.add_argument("--inches", type=int, required=True, help="Height (inches)")
     create_p.add_argument("--sex", choices=["male", "female"], required=True)
     create_p.add_argument("--activity", required=True,
                           choices=list(ACTIVITY_MULTIPLIERS.keys()),
@@ -372,8 +412,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     update_p = profile_sub.add_parser("update", help="Update profile")
     update_p.add_argument("--age", type=int)
-    update_p.add_argument("--weight", type=float)
-    update_p.add_argument("--height", type=float)
+    update_p.add_argument("--weight", type=float, help="Weight in lbs")
+    update_p.add_argument("--feet", type=int, help="Height (feet)")
+    update_p.add_argument("--inches", type=int, help="Height (inches)")
     update_p.add_argument("--activity", choices=list(ACTIVITY_MULTIPLIERS.keys()))
     update_p.add_argument("--goal", choices=list(GOAL_CALORIE_ADJUSTMENTS.keys()))
     update_p.set_defaults(func=cmd_profile_update)

@@ -73,14 +73,14 @@ This creates a SQLite database at `~/.meal_planner/meal_planner.db` and loads th
 python -m meal_planner profile create \
   --name "Your Name" \
   --age 28 \
-  --weight 75 \
-  --height 178 \
+  --weight 165 \
+  --feet 5 --inches 10 \
   --sex male \
   --activity moderately_active \
   --goal build_muscle
 ```
 
-Use `--weight` in **kg** and `--height` in **cm**.
+Use `--weight` in **lbs** and height as `--feet` / `--inches`.
 
 Activity options: `sedentary`, `lightly_active`, `moderately_active`, `very_active`, `extra_active`
 Goal options: `lose_fat`, `cut`, `maintain`, `build_muscle`, `recomp`
@@ -105,7 +105,7 @@ python -m meal_planner recipes import
 
 # 2. Create your profile
 python -m meal_planner profile create \
-  --name "Alex" --age 28 --weight 75 --height 178 \
+  --name "Alex" --age 28 --weight 165 --feet 5 --inches 10 \
   --sex male --activity moderately_active --goal build_muscle
 
 # 3. View your calculated macro targets
@@ -128,7 +128,8 @@ python -m meal_planner track daily
 ```bash
 # Create profile
 python -m meal_planner profile create \
-  --name NAME --age AGE --weight WEIGHT_KG --height HEIGHT_CM \
+  --name NAME --age AGE --weight WEIGHT_LBS \
+  --feet FEET --inches INCHES \
   --sex {male,female} \
   --activity {sedentary,lightly_active,moderately_active,very_active,extra_active} \
   --goal {lose_fat,cut,maintain,build_muscle,recomp}
@@ -137,7 +138,7 @@ python -m meal_planner profile create \
 python -m meal_planner profile show
 
 # Update profile
-python -m meal_planner profile update --weight 78 --goal maintain
+python -m meal_planner profile update --weight 170 --goal maintain
 ```
 
 ### Macro Targets
