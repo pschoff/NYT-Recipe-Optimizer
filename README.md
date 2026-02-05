@@ -43,6 +43,60 @@ The app supports multiple recipe sources:
 3. **Spoonacular API** — Commercial recipe API with free tier (150 req/day). See `recipe_sources.py`
 4. **TheMealDB** — Free open-source recipe database (CC licensed)
 
+## Installation
+
+**Prerequisites:** Python 3.9 or higher. Check with:
+```bash
+python --version
+```
+
+**Step 1: Clone the repository**
+```bash
+git clone https://github.com/pschoff/NYT-Recipe-Optimizer.git
+cd NYT-Recipe-Optimizer
+```
+
+**Step 2: Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**Step 3: Load the recipe database**
+```bash
+python -m meal_planner recipes import
+```
+
+This creates a SQLite database at `~/.meal_planner/meal_planner.db` and loads the 30 bundled recipes. You only need to do this once.
+
+**Step 4: Create your profile**
+```bash
+python -m meal_planner profile create \
+  --name "Your Name" \
+  --age 28 \
+  --weight 75 \
+  --height 178 \
+  --sex male \
+  --activity moderately_active \
+  --goal build_muscle
+```
+
+Use `--weight` in **kg** and `--height` in **cm**.
+
+Activity options: `sedentary`, `lightly_active`, `moderately_active`, `very_active`, `extra_active`
+Goal options: `lose_fat`, `cut`, `maintain`, `build_muscle`, `recomp`
+
+**Step 5: Generate your first meal plan**
+```bash
+python -m meal_planner plan generate
+```
+
+That's it — you're up and running.
+
+**Optional: Add NYTimes recipes (requires subscription)**
+```bash
+python -m meal_planner recipes scrape-nyt
+```
+
 ## Quick Start
 
 ```bash
