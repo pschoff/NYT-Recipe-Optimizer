@@ -1,6 +1,7 @@
 """Command-line interface for the meal planning application."""
 
 import argparse
+import os
 import sys
 from datetime import date, datetime
 
@@ -16,7 +17,12 @@ from meal_planner.planner import (
     regenerate_meal,
     save_meal_plan,
 )
-from meal_planner.recipe_sources import import_seed_recipes, scrape_nyt_article
+from meal_planner.recipe_sources import (
+    export_recipes_csv,
+    import_recipes_csv,
+    import_seed_recipes,
+    scrape_nyt_article,
+)
 from meal_planner.recipe_store import get_all_recipes, get_recipe, search_recipes
 from meal_planner.tracker import (
     daily_summary,
@@ -266,6 +272,24 @@ def cmd_recipes_scrape_nyt(args):
         print(f"\nImported {count} new recipes from NYTimes Cooking.")
 
 
+def cmd_recipes_export(args):
+    path = args.file
+    count = export_recipes_csv(path)
+    print(f"Exported {count} recipes to {path}")
+
+
+def cmd_recipes_import_csv(args):
+    path = args.file
+    if not os.path.exists(path):
+        print(f"File not found: {path}")
+        return
+    count = import_recipes_csv(path)
+    if count == 0:
+        print("No new recipes imported (all already in database, or file empty).")
+    else:
+        print(f"Imported {count} new recipes from {path}")
+
+
 def cmd_plan_generate(args):
     user = _get_active_user()
     targets = calculate_macro_targets(user)
@@ -445,6 +469,14 @@ def build_parser() -> argparse.ArgumentParser:
     nyt_p.add_argument("--url", default="https://cooking.nytimes.com/article/cheap-healthy-dinner-ideas",
                        help="NYTimes Cooking article URL to scrape (default: cheap healthy dinners)")
     nyt_p.set_defaults(func=cmd_recipes_scrape_nyt)
+
+    export_p = recipes_sub.add_parser("export", help="Export all recipes to a CSV file")
+    export_p.add_argument("file", help="Output CSV file path (e.g. recipes.csv)")
+    export_p.set_defaults(func=cmd_recipes_export)
+
+    import_csv_p = recipes_sub.add_parser("import-csv", help="Import recipes from a CSV file")
+    import_csv_p.add_argument("file", help="CSV file to import")
+    import_csv_p.set_defaults(func=cmd_recipes_import_csv)
 
     # --- plan ---
     plan_parser = subparsers.add_parser("plan", help="Meal planning")

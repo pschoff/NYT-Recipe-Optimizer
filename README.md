@@ -25,7 +25,7 @@ A personalized meal planning CLI that calculates macro targets based on your bod
 | `models.py` | Dataclasses for Recipe, Nutrition, UserProfile, MealPlan, MealLog |
 | `db.py` | SQLite schema, connection management, migrations |
 | `recipe_store.py` | Recipe CRUD operations (save, query, search) |
-| `recipe_sources.py` | Data sources: seed JSON, NYTimes Cooking scraper, Spoonacular API |
+| `recipe_sources.py` | Data sources: seed JSON, NYTimes Cooking scraper, CSV import/export |
 | `macro_calculator.py` | Mifflin-St Jeor BMR, TDEE, goal-based macro splits |
 | `recommender.py` | Meal recommendation with scoring and variety constraints |
 | `planner.py` | Weekly plan generation, persistence, regeneration |
@@ -40,8 +40,7 @@ The app supports multiple recipe sources:
 
 1. **Seed data** — 30 curated recipes with full nutritional info, bundled as `data/seed_recipes.json`
 2. **NYTimes Cooking** — Scrape recipes from any NYT Cooking article page (requires a NYTimes subscription). Extracts title, ingredients, instructions, and nutrition data via `recipe_scrapers`
-3. **Spoonacular API** — Commercial recipe API with free tier (150 req/day). See `recipe_sources.py`
-4. **TheMealDB** — Free open-source recipe database (CC licensed)
+3. **CSV import/export** — Export scraped recipes to CSV so you never have to re-scrape. Share recipe files or back them up
 
 ## Installation
 
@@ -165,6 +164,12 @@ python -m meal_planner recipes show 5          # Show recipe details
 # Scrape recipes from NYTimes Cooking (requires subscription)
 python -m meal_planner recipes scrape-nyt
 python -m meal_planner recipes scrape-nyt --url "https://cooking.nytimes.com/article/easy-pasta-recipes"
+
+# Export recipes to CSV (so you don't have to re-scrape)
+python -m meal_planner recipes export my_recipes.csv
+
+# Import recipes from a CSV file
+python -m meal_planner recipes import-csv my_recipes.csv
 ```
 
 ### Meal Planning
@@ -272,7 +277,7 @@ NYT-Recipe-Optimizer/
 │   ├── macro_calculator.py     # BMR/TDEE/macro target calculations
 │   ├── models.py               # Data models (dataclasses)
 │   ├── planner.py              # Weekly meal plan generation
-│   ├── recipe_sources.py       # Recipe data sources (seed, NYT scraper, APIs)
+│   ├── recipe_sources.py       # Recipe data sources (seed, NYT scraper, CSV)
 │   ├── recipe_store.py         # Recipe CRUD operations
 │   ├── recommender.py          # Meal recommendation engine
 │   └── tracker.py              # Meal logging and analytics
