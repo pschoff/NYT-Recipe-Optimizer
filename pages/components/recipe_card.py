@@ -31,6 +31,10 @@ def render_recipe_detail(recipe: Recipe):
     """
     st.markdown(f"# {recipe.title}")
 
+    # Link to original recipe
+    if recipe.source_url:
+        st.markdown(f"🔗 [View Original Recipe on NYTimes Cooking]({recipe.source_url})")
+
     # Metadata
     meta_parts = []
     if recipe.source:

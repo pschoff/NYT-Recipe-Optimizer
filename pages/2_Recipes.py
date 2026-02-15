@@ -30,7 +30,7 @@ if total_count == 0:
 # Search and filter controls
 st.markdown("### Search & Filter")
 
-col1, col2 = st.columns([3, 1])
+col1, col2, col3 = st.columns([3, 1, 1])
 
 with col1:
     search_query = st.text_input(
@@ -45,6 +45,16 @@ with col2:
         options=["breakfast", "lunch", "dinner"],
         default=[],
         help="Select one or more meal types"
+    )
+
+with col3:
+    max_time = st.number_input(
+        "⏱️ Max time (min)",
+        min_value=0,
+        max_value=300,
+        value=0,
+        step=5,
+        help="Total cooking time (0 = no limit)"
     )
 
 # Apply filters
@@ -64,6 +74,13 @@ if meal_type_filter:
         if any(mt in r.meal_types for mt in meal_type_filter)
     ]
 
+# Cooking time filter
+if max_time > 0:
+    filtered_recipes = [
+        r for r in filtered_recipes
+        if (r.prep_time_minutes + r.cook_time_minutes) <= max_time
+    ]
+
 # Display count
 st.caption(f"Showing {len(filtered_recipes)} of {total_count} recipes")
 
@@ -78,9 +95,11 @@ else:
     # Create DataFrame for display
     recipe_data = []
     for recipe in filtered_recipes:
+        total_time = recipe.prep_time_minutes + recipe.cook_time_minutes
         recipe_data.append({
             "ID": recipe.id,
             "Title": recipe.title,
+            "Time (min)": total_time if total_time > 0 else "N/A",
             "Calories": f"{recipe.nutrition.calories:.0f}" if recipe.nutrition else "N/A",
             "Protein (g)": f"{recipe.nutrition.protein_g:.0f}" if recipe.nutrition else "N/A",
             "Carbs (g)": f"{recipe.nutrition.carbs_g:.0f}" if recipe.nutrition else "N/A",
@@ -99,6 +118,7 @@ else:
         column_config={
             "ID": st.column_config.NumberColumn("ID", width="small"),
             "Title": st.column_config.TextColumn("Title", width="large"),
+            "Time (min)": st.column_config.TextColumn("Time", width="small"),
             "Calories": st.column_config.TextColumn("Calories", width="small"),
             "Protein (g)": st.column_config.TextColumn("Protein", width="small"),
             "Carbs (g)": st.column_config.TextColumn("Carbs", width="small"),
