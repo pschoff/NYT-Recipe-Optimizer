@@ -82,7 +82,7 @@ Welcome to your personalized meal planning assistant!
    - Fitness goal (lose fat, build muscle, maintain, etc.)
 
 2. **📚 Recipes** - Browse and search your recipe database:
-   - Currently have **17 recipes** (16 NYTimes + 1 custom)
+   - Recipes mostly from NYTimes Cooking, plus your own custom additions
    - Search by name or filter by meal type
    - View detailed nutrition info, ingredients, and instructions
 
