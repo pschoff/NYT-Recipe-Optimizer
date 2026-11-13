@@ -13,7 +13,6 @@ import os
 import time
 from typing import Optional
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
-from urllib.request import urlopen
 
 from meal_planner.config import SEED_DATA_PATH
 from meal_planner.models import Recipe, Nutrition, Ingredient
@@ -168,10 +167,14 @@ def _scrape_nyt_recipe(url: str) -> Optional[Recipe]:
     Uses the recipe_scrapers library to extract structured data.
     Returns a Recipe object or None if scraping fails.
     """
+    import requests
     from recipe_scrapers import scrape_html
 
     try:
-        html = urlopen(url).read().decode("utf-8")
+        # requests handles gzip-compressed responses, which urlopen does not
+        response = requests.get(url, headers=NYT_HEADERS, timeout=30)
+        response.raise_for_status()
+        html = response.text
         scraper = scrape_html(html, org_url=url)
     except Exception as e:
         print(f"  Failed to fetch {url}: {e}")
