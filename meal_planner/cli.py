@@ -265,7 +265,7 @@ def cmd_recipes_import(args):
 
 def cmd_recipes_scrape_nyt(args):
     url = args.url
-    count = scrape_nyt_article(url)
+    count = scrape_nyt_article(url, max_pages=args.pages)
     if count == 0:
         print("No new recipes imported (all already in database, or none found).")
     else:
@@ -465,9 +465,11 @@ def build_parser() -> argparse.ArgumentParser:
     import_p = recipes_sub.add_parser("import", help="Import seed recipes")
     import_p.set_defaults(func=cmd_recipes_import)
 
-    nyt_p = recipes_sub.add_parser("scrape-nyt", help="Scrape recipes from a NYTimes Cooking article")
+    nyt_p = recipes_sub.add_parser("scrape-nyt", help="Scrape recipes from a NYTimes Cooking article or topic page")
     nyt_p.add_argument("--url", default="https://cooking.nytimes.com/article/cheap-healthy-dinner-ideas",
-                       help="NYTimes Cooking article URL to scrape (default: cheap healthy dinners)")
+                       help="NYTimes Cooking article or topic URL to scrape (default: cheap healthy dinners)")
+    nyt_p.add_argument("--pages", type=int, default=1,
+                       help="Max listing pages to follow via ?page=N, e.g. for /topics/ pages (default: 1)")
     nyt_p.set_defaults(func=cmd_recipes_scrape_nyt)
 
     export_p = recipes_sub.add_parser("export", help="Export all recipes to a CSV file")

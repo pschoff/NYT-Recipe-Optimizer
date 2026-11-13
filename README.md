@@ -165,6 +165,9 @@ python -m meal_planner recipes show 5          # Show recipe details
 python -m meal_planner recipes scrape-nyt
 python -m meal_planner recipes scrape-nyt --url "https://cooking.nytimes.com/article/easy-pasta-recipes"
 
+# Loop through up to 5 pages of a paginated topic listing (?page=2, ?page=3, ...)
+python -m meal_planner recipes scrape-nyt --url "https://cooking.nytimes.com/topics/dinner-recipes" --pages 5
+
 # Export recipes to CSV (so you don't have to re-scrape)
 python -m meal_planner recipes export my_recipes.csv
 

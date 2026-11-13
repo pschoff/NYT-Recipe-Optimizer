@@ -12,6 +12,7 @@ import json
 import os
 import time
 from typing import Optional
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from urllib.request import urlopen
 
 from meal_planner.config import SEED_DATA_PATH
@@ -82,29 +83,83 @@ def import_seed_recipes(db_path: Optional[str] = None) -> int:
     return count
 
 
-def _discover_nyt_recipe_urls(article_url: str) -> set:
-    """Crawl a NYTimes Cooking article page and extract recipe URLs.
+NYT_BASE_URL = "https://cooking.nytimes.com"
+NYT_HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; recipe-optimizer/1.0)"}
 
-    Based on the original Scraper.py logic.
+
+def _nyt_page_url(url: str, page: int) -> str:
+    """Return ``url`` pointing at the given page number.
+
+    NYT Cooking listing pages paginate with ``?page=N``; page 1 has no
+    parameter. Any other query parameters on ``url`` are kept.
     """
-    import requests
+    parts = urlsplit(url)
+    query = [(k, v) for k, v in parse_qsl(parts.query) if k != "page"]
+    if page > 1:
+        query.append(("page", str(page)))
+    return urlunsplit(parts._replace(query=urlencode(query)))
+
+
+def _extract_nyt_recipe_links(html: str) -> list:
+    """Return the unique recipe URLs linked from a page, in page order."""
     from bs4 import BeautifulSoup
 
-    response = requests.get(article_url, timeout=30)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-
-    recipe_links = set()
+    soup = BeautifulSoup(html, "html.parser")
+    links = {}
     for a in soup.find_all("a", href=True):
         href = a["href"]
-        if "/recipes/" in href:
-            if href.startswith("https://"):
-                full_url = href
-            else:
-                full_url = "https://cooking.nytimes.com" + href
-            recipe_links.add(full_url)
+        if "/recipes/" not in href:
+            continue
+        full_url = href if href.startswith("https://") else NYT_BASE_URL + href
+        # Drop query string and fragment so the same recipe isn't counted twice
+        full_url = full_url.split("?")[0].split("#")[0]
+        links[full_url] = None
+    return list(links)
 
-    return recipe_links
+
+def _discover_nyt_recipe_urls(
+    article_url: str, max_pages: int = 1, delay: float = 1.0
+) -> list:
+    """Crawl a NYTimes Cooking page and extract recipe URLs.
+
+    Works for article pages and for paginated listing pages such as
+    ``/topics/dinner-recipes``. Pages are fetched in order, starting from the
+    page number in ``article_url`` (default 1), until ``max_pages`` have been
+    read, a page fails to load, or a page adds no new recipe links (an article
+    or an out-of-range page number just repeats what was already seen).
+
+    Returns the unique URLs in the order they were found.
+    """
+    import requests
+
+    start = 1
+    for key, value in parse_qsl(urlsplit(article_url).query):
+        if key == "page" and value.isdigit():
+            start = max(1, int(value))
+
+    seen = {}
+    for page in range(start, start + max_pages):
+        page_url = _nyt_page_url(article_url, page)
+        response = requests.get(page_url, headers=NYT_HEADERS, timeout=30)
+        if page == start:
+            response.raise_for_status()
+        elif response.status_code != 200:
+            print(f"  Stopping at page {page}: HTTP {response.status_code}")
+            break
+
+        new = [u for u in _extract_nyt_recipe_links(response.text) if u not in seen]
+        if not new:
+            if page > start:
+                print(f"  No new recipes on page {page}, stopping.")
+            break
+
+        seen.update(dict.fromkeys(new))
+        if max_pages > 1:
+            print(f"  Page {page}: {len(new)} new ({len(seen)} total)")
+        if delay > 0 and page < start + max_pages - 1:
+            time.sleep(delay)
+
+    return list(seen)
 
 
 def _scrape_nyt_recipe(url: str) -> Optional[Recipe]:
@@ -202,23 +257,36 @@ def scrape_nyt_article(
     article_url: str = "https://cooking.nytimes.com/article/cheap-healthy-dinner-ideas",
     db_path: Optional[str] = None,
     delay: float = 1.0,
+    max_pages: int = 1,
 ) -> int:
-    """Scrape recipes from a NYTimes Cooking article and import them.
+    """Scrape recipes from a NYTimes Cooking page and import them.
 
-    Discovers recipe links on the article page, then scrapes each recipe
-    individually. Skips recipes already in the database (by title match).
-    Adds a delay between requests to be respectful.
+    Discovers recipe links on the page (following ``?page=N`` pagination for
+    up to ``max_pages`` pages), then scrapes each recipe individually. Skips
+    recipes already in the database (by source URL before fetching, and by
+    title after). Adds a delay between requests to be respectful.
 
     Returns the number of newly imported recipes.
     """
     kwargs = {"db_path": db_path} if db_path else {}
 
     print(f"Discovering recipe URLs from {article_url}...")
-    urls = _discover_nyt_recipe_urls(article_url)
+    urls = _discover_nyt_recipe_urls(article_url, max_pages=max_pages, delay=delay)
     print(f"Found {len(urls)} recipe links.")
 
+    known_urls = {r.source_url for r in get_all_recipes(**kwargs) if r.source_url}
+
     imported = 0
-    for i, url in enumerate(sorted(urls), 1):
+    fetched = False
+    for i, url in enumerate(urls, 1):
+        if url in known_urls:
+            print(f"  [{i}/{len(urls)}] Skipped (already in database): {url}")
+            continue
+
+        if fetched and delay > 0:
+            time.sleep(delay)
+        fetched = True
+
         print(f"  [{i}/{len(urls)}] Scraping {url}...")
         recipe = _scrape_nyt_recipe(url)
         if not recipe:
@@ -234,9 +302,6 @@ def scrape_nyt_article(
         imported += 1
         cal_str = f"{recipe.nutrition.calories:.0f} cal" if recipe.nutrition else "no nutrition"
         print(f"    Imported: {recipe.title} ({cal_str})")
-
-        if delay > 0 and i < len(urls):
-            time.sleep(delay)
 
     return imported
 
