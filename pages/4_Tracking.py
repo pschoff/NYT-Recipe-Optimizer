@@ -15,18 +15,23 @@ from pages.components.charts import (
     create_daily_calories_trend, create_macro_stacked_bar, create_adherence_gauge
 )
 
-st.set_page_config(page_title="Tracking | Meal Planner", page_icon="📊", layout="wide")
-st.title("📊 Nutrition Tracking & Analytics")
+from pages.components.session import init_session
+from pages.components.theme import apply_theme, page_header
+
+st.set_page_config(page_title="Tracking | Meal Planner", layout="wide")
+apply_theme()
+init_session()
+page_header('Tracking', 'Nutrition Log', 'Log what you ate and see how days, weeks and months measure up against your targets.')
 
 # Check if user profile exists
 if not st.session_state.user_profile:
-    st.warning("⚠️ No profile found. Please create a profile first in the Profile page.")
+    st.warning("No profile found. Please create a profile first in the Profile page.")
     st.stop()
 
 user = st.session_state.user_profile
 targets = st.session_state.macro_targets
 
-st.info(f"👤 Tracking for: **{user.name}** | 🎯 Target: **{targets.calories:.0f} cal/day**")
+st.info(f"Tracking for: **{user.name}** | Target: **{targets.calories:.0f} cal/day**")
 
 # Meal Logging Section
 st.markdown("### Log a Meal")
@@ -78,7 +83,7 @@ with st.form("log_meal_form"):
             help="What time?"
         )
 
-    submitted = st.form_submit_button("📝 Log Meal", use_container_width=True)
+    submitted = st.form_submit_button("Log Meal", use_container_width=True)
 
     if submitted:
         selected_recipe = recipe_options[selected_recipe_key]
@@ -98,15 +103,15 @@ with st.form("log_meal_form"):
             # Show confirmation with nutrition info
             if selected_recipe.nutrition:
                 nutrition = selected_recipe.nutrition.scaled(servings)
-                st.success(f"✅ Logged: {selected_recipe.title} ({nutrition.calories:.0f} cal)")
+                st.success(f"Logged: {selected_recipe.title} ({nutrition.calories:.0f} cal)")
             else:
-                st.success(f"✅ Logged: {selected_recipe.title}")
+                st.success(f"Logged: {selected_recipe.title}")
 
             # Clear form by rerunning
             st.rerun()
 
         except Exception as e:
-            st.error(f"❌ Failed to log meal: {e}")
+            st.error(f"Failed to log meal: {e}")
 
 st.divider()
 
@@ -115,7 +120,7 @@ st.markdown("### Analytics")
 
 # Period selector
 period_tab1, period_tab2, period_tab3, period_tab4 = st.tabs([
-    "📅 Daily", "📆 Weekly", "📊 Monthly", "📈 Yearly"
+    "Daily", "Weekly", "Monthly", "Yearly"
 ])
 
 # Daily Tab
@@ -349,4 +354,4 @@ with period_tab4:
             st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("---")
-st.caption("💡 **Tip:** Log your meals daily to track adherence to your macro targets and see progress over time.")
+st.caption("**Tip:** Log your meals daily to track adherence to your macro targets and see progress over time.")

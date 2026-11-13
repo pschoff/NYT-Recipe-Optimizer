@@ -13,12 +13,17 @@ from meal_planner.models import Nutrition
 from meal_planner.recipe_store import recipe_count
 from pages.components.nutrition_display import render_nutrition_card
 
-st.set_page_config(page_title="Meal Plan | Meal Planner", page_icon="📅", layout="wide")
-st.title("📅 Weekly Meal Planner")
+from pages.components.session import init_session
+from pages.components.theme import apply_theme, page_header
+
+st.set_page_config(page_title="Meal Plan | Meal Planner", layout="wide")
+apply_theme()
+init_session()
+page_header('Meal Plan', 'The Week Ahead', 'Seven days of breakfast, lunch and dinner, portioned to your targets. Swap any meal you are not in the mood for.')
 
 # Check if user profile exists
 if not st.session_state.user_profile:
-    st.warning("⚠️ No profile found. Please create a profile first in the Profile page.")
+    st.warning("No profile found. Please create a profile first in the Profile page.")
     st.stop()
 
 user = st.session_state.user_profile
@@ -27,10 +32,10 @@ targets = st.session_state.macro_targets
 # Check if recipes exist
 num_recipes = recipe_count()
 if num_recipes == 0:
-    st.error("❌ No recipes found. Please add recipes first in the Recipes page.")
+    st.error("No recipes found. Please add recipes first in the Recipes page.")
     st.stop()
 
-st.info(f"👤 Planning for: **{user.name}** | 🎯 Target: **{targets.calories:.0f} cal/day**")
+st.info(f"Planning for: **{user.name}** | Target: **{targets.calories:.0f} cal/day**")
 
 # Week selector
 st.markdown("### Select Week")
@@ -57,12 +62,12 @@ with col1:
     st.caption(f"Week: {week_start.strftime('%b %d')} - {week_end.strftime('%b %d, %Y')}")
 
 with col2:
-    if st.button("⬅️ Previous Week", use_container_width=True):
+    if st.button("← Previous Week", use_container_width=True):
         st.session_state.selected_week_start -= timedelta(days=7)
         st.rerun()
 
 with col3:
-    if st.button("Next Week ➡️", use_container_width=True):
+    if st.button("Next Week →", use_container_width=True):
         st.session_state.selected_week_start += timedelta(days=7)
         st.rerun()
 
@@ -72,21 +77,21 @@ st.divider()
 plan = load_meal_plan(user.id, week_start)
 
 if not plan:
-    st.info("📋 No meal plan exists for this week yet.")
+    st.info("No meal plan exists for this week yet.")
 
-    if st.button("✨ Generate Meal Plan", type="primary", use_container_width=True):
-        with st.spinner("🔄 Generating optimized meal plan..."):
+    if st.button("Generate Meal Plan", type="primary", use_container_width=True):
+        with st.spinner("Generating optimized meal plan..."):
             try:
                 plan = generate_weekly_plan(user.id, targets, week_start)
                 plan_id = save_meal_plan(plan)
                 plan.id = plan_id
-                st.success("✅ Meal plan generated successfully!")
+                st.success("Meal plan generated successfully!")
                 st.rerun()
             except Exception as e:
-                st.error(f"❌ Failed to generate meal plan: {e}")
+                st.error(f"Failed to generate meal plan: {e}")
                 st.stop()
 else:
-    st.success(f"✅ Meal plan loaded for week of {week_start.strftime('%b %d, %Y')}")
+    st.success(f"Meal plan loaded for week of {week_start.strftime('%b %d, %Y')}")
 
     # Display meal plan grid
     st.markdown("### Weekly Meal Plan")
@@ -135,7 +140,7 @@ else:
 
                         # Regenerate button
                         if st.button(
-                            "🔄 Swap",
+                            "Swap",
                             key=f"regen_{day}_{meal_type}",
                             use_container_width=True
                         ):
@@ -143,12 +148,12 @@ else:
                                 try:
                                     new_entry = regenerate_meal(plan.id, day, meal_type, targets)
                                     if new_entry:
-                                        st.success("✅ Meal updated!")
+                                        st.success("Meal updated!")
                                         st.rerun()
                                     else:
-                                        st.error("❌ Could not find replacement recipe")
+                                        st.error("Could not find replacement recipe")
                                 except Exception as e:
-                                    st.error(f"❌ Failed to regenerate: {e}")
+                                    st.error(f"Failed to regenerate: {e}")
                 else:
                     st.info("No meal assigned")
 
@@ -232,21 +237,21 @@ else:
     # Regenerate entire plan button
     st.divider()
 
-    if st.button("🔄 Regenerate Entire Plan", type="secondary"):
+    if st.button("Regenerate Entire Plan", type="secondary"):
         if st.session_state.get('confirm_regenerate'):
             with st.spinner("Generating new meal plan..."):
                 try:
                     # Delete old plan and generate new one
                     new_plan = generate_weekly_plan(user.id, targets, week_start)
                     plan_id = save_meal_plan(new_plan)
-                    st.success("✅ New meal plan generated!")
+                    st.success("New meal plan generated!")
                     st.session_state.confirm_regenerate = False
                     st.rerun()
                 except Exception as e:
-                    st.error(f"❌ Failed to regenerate: {e}")
+                    st.error(f"Failed to regenerate: {e}")
         else:
-            st.warning("⚠️ This will replace your entire meal plan. Click again to confirm.")
+            st.warning("This will replace your entire meal plan. Click again to confirm.")
             st.session_state.confirm_regenerate = True
 
 st.markdown("---")
-st.caption("💡 **Tip:** Use the 'Swap' buttons to replace individual meals, or regenerate the entire week for a fresh plan.")
+st.caption("**Tip:** Use the 'Swap' buttons to replace individual meals, or regenerate the entire week for a fresh plan.")

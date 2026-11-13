@@ -3,151 +3,120 @@
 Main entry point for the multi-page Streamlit application.
 """
 
-import streamlit as st
-from datetime import date, timedelta
+import random
+from html import escape
 
-from meal_planner.db import init_db
-from meal_planner.cli import _load_user
-from meal_planner.macro_calculator import calculate_macro_targets
+import streamlit as st
+from datetime import date
+
+from meal_planner.planner import load_meal_plan, DAY_NAMES
+from meal_planner.recipe_store import get_all_recipes
+from pages.components.session import init_session
+from pages.components.theme import apply_theme, masthead, recipe_card, stat
 
 st.set_page_config(
     page_title="Meal Planner",
-    page_icon="🍽️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+apply_theme()
 
-# Initialize DB once per session
-if 'db_initialized' not in st.session_state:
-    init_db()
-    st.session_state.db_initialized = True
+init_session()
 
-# Initialize session state variables
-if 'user_profile' not in st.session_state:
-    st.session_state.user_profile = None
-if 'macro_targets' not in st.session_state:
-    st.session_state.macro_targets = None
-if 'current_week_start' not in st.session_state:
-    today = date.today()
-    # Get Monday of current week
-    st.session_state.current_week_start = today - timedelta(days=today.weekday())
-
-# Load user profile if it exists
-if st.session_state.user_profile is None:
-    user = _load_user()
-    if user:
-        st.session_state.user_profile = user
-        st.session_state.macro_targets = calculate_macro_targets(user)
-
-# Sidebar: Show current user info
+# Sidebar: current profile and targets
 with st.sidebar:
-    st.markdown("## 🍽️ Meal Planner")
-    st.markdown("---")
-
     if st.session_state.user_profile:
         user = st.session_state.user_profile
-        st.success(f"👤 **{user.name}**")
+        st.markdown(f"**{user.name}**")
         st.caption(f"Goal: {user.goal.replace('_', ' ').title()}")
 
         if st.session_state.macro_targets:
             targets = st.session_state.macro_targets
             st.metric("Daily Target", f"{targets.calories:.0f} cal")
             col1, col2, col3 = st.columns(3)
-            col1.metric("P", f"{targets.protein_g:.0f}g")
-            col2.metric("C", f"{targets.carbs_g:.0f}g")
-            col3.metric("F", f"{targets.fat_g:.0f}g")
+            col1.metric("Protein", f"{targets.protein_g:.0f}g")
+            col2.metric("Carbs", f"{targets.carbs_g:.0f}g")
+            col3.metric("Fat", f"{targets.fat_g:.0f}g")
     else:
-        st.warning("⚠️ No profile found")
-        st.caption("Create one in the Profile page")
+        st.caption("No profile yet. Create one on the Profile page.")
 
-    st.markdown("---")
-    st.markdown("### Navigation")
-    st.markdown("Use the sidebar to navigate:")
-    st.markdown("- 📋 **Profile** - Manage your profile")
-    st.markdown("- 📚 **Recipes** - Browse recipes")
-    st.markdown("- 📅 **Meal Plan** - Weekly plans")
-    st.markdown("- 📊 **Tracking** - Log & track")
+# Front page
+masthead("The Meal Planner", "Recipes, portioned to your numbers")
 
-# Main home page
-st.title("🍽️ Meal Planning App")
+user = st.session_state.user_profile
+targets = st.session_state.macro_targets
+recipes = get_all_recipes()
+week_start = st.session_state.current_week_start
+plan = load_meal_plan(user.id, week_start) if user else None
 
-st.markdown("""
-Welcome to your personalized meal planning assistant!
+if not recipes:
+    st.info("The recipe box is empty. Import recipes on the Recipes page to get started.")
+    st.page_link("pages/2_Recipes.py", label="Go to Recipes →")
+    st.stop()
 
-### Getting Started
+# Featured recipes: a stable pick for the week, so the page doesn't reshuffle on every rerun
+rng = random.Random(week_start.toordinal())
+featured = rng.sample(recipes, min(7, len(recipes)))
 
-1. **📋 Profile** - Create your profile to calculate your daily macro targets based on your:
-   - Age, weight, height, sex
-   - Activity level
-   - Fitness goal (lose fat, build muscle, maintain, etc.)
+lead, side = st.columns([3, 2], gap="large")
 
-2. **📚 Recipes** - Browse and search your recipe database:
-   - Recipes mostly from NYTimes Cooking, plus your own custom additions
-   - Search by name or filter by meal type
-   - View detailed nutrition info, ingredients, and instructions
+with lead:
+    recipe_card(featured[0], hero=True)
+    st.page_link("pages/2_Recipes.py", label="Browse all recipes →")
 
-3. **📅 Meal Plan** - Generate optimized weekly meal plans:
-   - Automatically allocates calories across breakfast, lunch, and dinner
-   - Ensures variety (no recipe repeats within 21 days)
-   - Regenerate individual meals with one click
-
-4. **📊 Tracking** - Log meals and track your nutrition:
-   - Log consumed meals with servings
-   - View daily, weekly, monthly, and yearly summaries
-   - See adherence to your macro targets with charts
-
-### Quick Actions
-
-""")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("#### 👤 Your Profile")
-    if st.session_state.user_profile:
-        user = st.session_state.user_profile
-        st.write(f"**Name:** {user.name}")
-        st.write(f"**Age:** {user.age}")
-        st.write(f"**Goal:** {user.goal.replace('_', ' ').title()}")
-
-        if st.session_state.macro_targets:
-            targets = st.session_state.macro_targets
-            st.write(f"**Target Calories:** {targets.calories:.0f} kcal/day")
+with side:
+    today_idx = date.today().weekday()
+    st.markdown('<div class="ed-kicker">On the table today</div>', unsafe_allow_html=True)
+    todays = sorted(
+        (e for e in plan.entries if e.day_of_week == today_idx and e.recipe),
+        key=lambda e: ["breakfast", "lunch", "dinner"].index(e.meal_type),
+    ) if plan else []
+    if todays:
+        for entry in todays:
+            st.markdown(
+                f'<div class="ed-card" style="min-height:0"><div class="ed-meta">{entry.meal_type.upper()}</div>'
+                f'<div class="ed-card-title" style="font-size:1.1rem">{escape(entry.recipe.title)}</div></div>',
+                unsafe_allow_html=True,
+            )
+        st.page_link("pages/3_Meal_Plan.py", label=f"See all of {DAY_NAMES[today_idx]} and the week →")
+    elif user:
+        st.write("No plan for this week yet.")
+        st.page_link("pages/3_Meal_Plan.py", label="Generate this week's plan →")
     else:
-        st.info("No profile found. Go to the Profile page to create one!")
+        st.write("Create a profile to get daily targets and a weekly plan built around them.")
+        st.page_link("pages/1_Profile.py", label="Create your profile →")
 
-with col2:
-    st.markdown("#### 📊 Quick Stats")
-    # Show some quick stats
-    from meal_planner.recipe_store import recipe_count
-    from meal_planner.planner import load_meal_plan
+st.markdown("### This Week's Picks")
+cols = st.columns(3, gap="large")
+for i, recipe in enumerate(featured[1:]):
+    with cols[i % 3]:
+        recipe_card(recipe)
 
-    num_recipes = recipe_count()
-    st.write(f"**Total Recipes:** {num_recipes}")
+st.markdown("### By the Numbers")
+c1, c2, c3, c4 = st.columns(4, gap="large")
+with c1:
+    stat(str(len(recipes)), "Recipes in the box")
+with c2:
+    stat(f"{targets.calories:.0f}" if targets else "—", "Daily calorie target")
+with c3:
+    stat(f"{targets.protein_g:.0f}g" if targets else "—", "Daily protein target")
+with c4:
+    stat(str(len(plan.entries)) if plan else "0", "Meals planned this week")
 
-    if st.session_state.user_profile:
-        user = st.session_state.user_profile
-        plan = load_meal_plan(user.id, st.session_state.current_week_start)
-        if plan:
-            st.write(f"**Meal Plan:** ✓ Active for this week")
-        else:
-            st.write(f"**Meal Plan:** No plan for this week")
-    else:
-        st.write(f"**Meal Plan:** Create a profile first")
+st.markdown("### How It Works")
+h1, h2, h3 = st.columns(3, gap="large")
+with h1:
+    st.markdown("#### 1. Set your targets")
+    st.write("Enter age, weight, height, activity level and goal. Daily calories and macros follow from the Mifflin-St Jeor equation.")
+    st.page_link("pages/1_Profile.py", label="Profile →")
+with h2:
+    st.markdown("#### 2. Plan the week")
+    st.write("Each day's breakfast, lunch and dinner are chosen and portioned to match your targets, with no repeats inside three weeks.")
+    st.page_link("pages/3_Meal_Plan.py", label="Meal Plan →")
+with h3:
+    st.markdown("#### 3. Log what you eat")
+    st.write("Record meals and compare days, weeks and months against your targets.")
+    st.page_link("pages/4_Tracking.py", label="Tracking →")
 
-st.markdown("---")
-
-st.markdown("""
-### Tips
-
-- 💡 Start by creating your profile in the **Profile** page
-- 💡 Browse available recipes in the **Recipes** page
-- 💡 Generate a meal plan in the **Meal Plan** page
-- 💡 Log your meals in the **Tracking** page to monitor progress
-
-### About This App
-
-This meal planning application uses evidence-based nutrition science (Mifflin-St Jeor equation) to calculate your personalized macro targets. It then recommends meals that match your targets while ensuring variety and balance in your diet.
-
-All data is stored locally in a SQLite database at `~/.meal_planner/meal_planner.db`.
-""")
+st.divider()
+st.caption("All data is stored locally in a SQLite database at ~/.meal_planner/meal_planner.db")

@@ -1,8 +1,11 @@
 """Recipe card display components for Streamlit pages."""
 
+from html import escape
+
 import streamlit as st
 from meal_planner.models import Recipe
 from pages.components.nutrition_display import render_nutrition_card
+from pages.components.theme import page_header, recipe_kicker
 
 
 def render_recipe_summary(recipe: Recipe):
@@ -29,50 +32,45 @@ def render_recipe_detail(recipe: Recipe):
     Args:
         recipe: Recipe object to display in detail
     """
-    st.markdown(f"# {recipe.title}")
+    page_header(recipe_kicker(recipe), recipe.title)
 
-    # Link to original recipe
-    if recipe.source_url:
-        st.markdown(f"🔗 [View Original Recipe on NYTimes Cooking]({recipe.source_url})")
-
-    # Metadata
-    meta_parts = []
-    if recipe.source:
-        meta_parts.append(f"Source: {recipe.source.title()}")
-    meta_parts.append(f"Servings: {recipe.servings}")
+    meta_parts = [f"Yield: <b>{recipe.servings} servings</b>"]
     if recipe.prep_time_minutes:
-        meta_parts.append(f"Prep: {recipe.prep_time_minutes} min")
+        meta_parts.append(f"Prep: <b>{recipe.prep_time_minutes} min</b>")
     if recipe.cook_time_minutes:
-        meta_parts.append(f"Cook: {recipe.cook_time_minutes} min")
+        meta_parts.append(f"Cook: <b>{recipe.cook_time_minutes} min</b>")
+    if recipe.source:
+        meta_parts.append(f"Source: <b>{escape(recipe.source.title())}</b>")
+    st.markdown(f'<div class="ed-meta">{" &nbsp;·&nbsp; ".join(meta_parts)}</div>', unsafe_allow_html=True)
 
-    st.caption(" | ".join(meta_parts))
+    if recipe.source_url:
+        st.markdown(f"[View the original recipe]({recipe.source_url})")
 
-    # Meal types
-    if recipe.meal_types:
-        meal_types_str = ', '.join([mt.capitalize() for mt in recipe.meal_types])
-        st.info(f"**Meal Types:** {meal_types_str}")
-
-    # Nutrition
     if recipe.nutrition:
         render_nutrition_card(recipe.nutrition, servings=1.0, title="Nutrition Per Serving")
-        st.markdown("---")
 
-    # Ingredients
-    if recipe.ingredients:
+    left, right = st.columns([2, 3], gap="large")
+
+    with left:
         st.markdown("### Ingredients")
-        for ing in recipe.ingredients:
-            if ing.quantity and ing.unit:
-                st.markdown(f"- {ing.quantity} {ing.unit} {ing.name}")
-            else:
-                st.markdown(f"- {ing.name}")
-            if ing.notes:
-                st.caption(f"  _{ing.notes}_")
-        st.markdown("---")
+        if recipe.ingredients:
+            items = []
+            for ing in recipe.ingredients:
+                text = f"{ing.quantity} {ing.unit} {ing.name}" if ing.quantity and ing.unit else ing.name
+                if ing.notes:
+                    text += f" ({ing.notes})"
+                items.append(f"<li>{escape(text)}</li>")
+            st.markdown(f'<ul class="ed-ingredients">{"".join(items)}</ul>', unsafe_allow_html=True)
+        else:
+            st.caption("No ingredients listed")
 
-    # Instructions
-    if recipe.instructions:
-        st.markdown("### Instructions")
-        for i, step in enumerate(recipe.instructions, 1):
-            st.markdown(f"**{i}.** {step}")
-    else:
-        st.info("No instructions available")
+    with right:
+        st.markdown("### Preparation")
+        if recipe.instructions:
+            steps = "".join(
+                f'<div class="ed-step"><div class="ed-step-n">Step {i}</div><p>{escape(step)}</p></div>'
+                for i, step in enumerate(recipe.instructions, 1)
+            )
+            st.markdown(steps, unsafe_allow_html=True)
+        else:
+            st.caption("No instructions available")

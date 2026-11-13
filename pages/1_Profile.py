@@ -11,8 +11,13 @@ from meal_planner.config import ACTIVITY_MULTIPLIERS, GOAL_CALORIE_ADJUSTMENTS
 from pages.components.unit_converter import lbs_to_kg, kg_to_lbs, ft_in_to_cm, cm_to_ft_in
 from pages.components.charts import create_macro_pie_chart
 
-st.set_page_config(page_title="Profile | Meal Planner", page_icon="📋", layout="wide")
-st.title("📋 Profile Management")
+from pages.components.session import init_session
+from pages.components.theme import apply_theme, page_header
+
+st.set_page_config(page_title="Profile | Meal Planner", layout="wide")
+apply_theme()
+init_session()
+page_header('Profile', 'Your Profile', 'Body metrics and goals set the daily calorie and macro targets every plan is built around.')
 
 # Load current user
 user = _load_user()
@@ -147,18 +152,18 @@ with st.form("profile_form"):
 
     st.markdown("---")
     submitted = st.form_submit_button(
-        "💾 Save Profile" if not user else "💾 Update Profile",
+        "Save Profile" if not user else "Update Profile",
         use_container_width=True
     )
 
     if submitted:
         # Validation
         if not name or not name.strip():
-            st.error("⚠️ Name is required")
+            st.error("Name is required")
         elif age < 13:
-            st.error("⚠️ Age must be 13 or older")
+            st.error("Age must be 13 or older")
         elif weight_lbs < 50 or weight_lbs > 500:
-            st.error("⚠️ Weight must be between 50 and 500 lbs")
+            st.error("Weight must be between 50 and 500 lbs")
         else:
             # Convert to metric
             weight_kg = lbs_to_kg(weight_lbs)
@@ -180,11 +185,11 @@ with st.form("profile_form"):
                 if user:
                     # Update existing
                     _update_user(profile)
-                    st.success("✅ Profile updated successfully!")
+                    st.success("Profile updated successfully!")
                 else:
                     # Create new
                     user_id = _save_user(profile)
-                    st.success(f"✅ Profile created successfully! (ID: {user_id})")
+                    st.success(f"Profile created successfully! (ID: {user_id})")
 
                 # Update session state
                 st.session_state.user_profile = profile
@@ -194,7 +199,7 @@ with st.form("profile_form"):
                 st.rerun()
 
             except Exception as e:
-                st.error(f"❌ Error saving profile: {e}")
+                st.error(f"Error saving profile: {e}")
 
 st.markdown("---")
-st.caption("💡 **Tip:** Your macro targets are calculated using the Mifflin-St Jeor equation, which is evidence-based and widely used in nutrition science.")
+st.caption("**Tip:** Your macro targets are calculated using the Mifflin-St Jeor equation, which is evidence-based and widely used in nutrition science.")

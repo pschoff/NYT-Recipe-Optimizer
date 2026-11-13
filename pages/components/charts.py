@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 from meal_planner.models import MacroTargets
+from pages.components.theme import CHART_COLORS
 
 
 def create_macro_pie_chart(targets: MacroTargets):
@@ -26,7 +27,7 @@ def create_macro_pie_chart(targets: MacroTargets):
         names=labels,
         values=values,
         title="Macro Calorie Distribution",
-        color_discrete_sequence=['#FF6B6B', '#4ECDC4', '#FFE66D']
+        color_discrete_sequence=CHART_COLORS
     )
 
     fig.update_traces(textposition='inside', textinfo='percent+label')
@@ -172,7 +173,7 @@ def create_macro_stacked_bar(meal_logs: list, targets: MacroTargets = None):
         y=['Protein', 'Carbs', 'Fat'],
         title='Daily Macro Breakdown',
         barmode='stack',
-        color_discrete_sequence=['#FF6B6B', '#4ECDC4', '#FFE66D']
+        color_discrete_sequence=CHART_COLORS
     )
 
     fig.update_layout(
